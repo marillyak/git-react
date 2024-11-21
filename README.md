@@ -1,6 +1,4 @@
-Aqui está como você pode escrever o relatório em **Markdown**, com as instruções que você forneceu e incluindo um link para a imagem que você mencionou:
 
-```markdown
 # Relatório: Exercício (Instruções) - Configuração do Aplicativo React
 
 ## Passo 1
