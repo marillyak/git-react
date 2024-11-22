@@ -49,4 +49,3 @@ import { Navbar, NavbarBrand } from 'reactstrap';
 O processo foi um sucesso. Abaixo, há um link para a imagem que mostra o **navbar** em funcionamento:
 
 ![Imagem](atv.png)
-
