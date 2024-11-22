@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './components/MenuComponent'
 //import { Button } from 'reactstrap';
 
 function App() {
@@ -17,3 +18,5 @@ function App() {
 }
 
 export default App;
+
+<Menu />
