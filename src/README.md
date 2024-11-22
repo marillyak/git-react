@@ -31,13 +31,12 @@ Ainda na pasta `src`, abri o arquivo `App.js` e adicionei o seguinte código:
 
 ### Explicando o Código
 
-1. **`<Navbar>`**: Ele vai criar uma barra de navegação.
-2. **`dark`**: Faz a barra ficar com a cor escura.
-3. **`color="primary"`**: Esse comando vai define a cor principal da barra.
-4. **`<NavbarBrand>`**: Coloca o nome "Ristorante Con Fusion" na barra. Esse nome ele serve como um link que vai levar para a página inicial.
-5. **`<div>Aluno: MarillyaK</div>`**: Vai exibir o nome de um aluno na barra, abaixo do nome do restaurante.
+1. **`<Navbar dark color="primary">`**: A barra de navegação tem fundo escuro e uma cor azul como tema(ela defini uma cor primaria automaticamente).
+2. **`<div className="container">`**: Coloca o conteúdo dentro de uma "caixa" para centralizar tudo.
+3. **`<NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>`**: Exibe o nome do restaurante, que quando clica ele leva à página inicial.
+4. **`<div>Aluno: MarillyaK</div>`**: Mostra o nome do aluno que está desenvolvendo o site.
 
-Resumindo: **É uma barra com o nome de um restaurante e o nome de um aluno.** Ela tem uma cor escura e, ao clicar no nome do restaurante, leva à página inicial.
+Ou seja, **é uma barra de navegação simples com o nome do restaurante e a identificação do aluno.**
 
 ### Importações que foram feitas:
 
@@ -46,6 +45,6 @@ import { Navbar, NavbarBrand } from 'reactstrap';
 ```
 
 ## Passo 4
-O processo foi um sucesso. Abaixo, há um link para a imagem que mostra o **navbar** em funcionamento:
+O processo foi um sucesso. Abaixo, terá uma imagem que mostra o **navbar** em funcionamento:
 
 ![Imagem](atv.png)
