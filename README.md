@@ -1,3 +1,4 @@
+
 # Relatório: Exercício (Instruções) - Componentes do React - Parte 1
 
 ## Componente Menu
@@ -105,7 +106,7 @@ const [dishes] = useState([
 ## 4. Exibição do Menu
 
 ```js
-return (
+return {(
     <div className="container">
       <div className="row">
         <Media list>
@@ -126,4 +127,4 @@ return (
 export default Menu;
 ```
 
-- Ele perrmite que o componente `Menu` seja usado em outros lugares.
+- Ele permite que o componente `Menu` seja usado em outros lugares.
