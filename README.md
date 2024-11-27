@@ -1,130 +1,84 @@
+# Exercício (Instruções): Componentes do React - Parte 2
 
-# Relatório: Exercício (Instruções) - Componentes do React - Parte 1
+## Alterações feitas
 
-## Componente Menu
+-  Atualizei o  conteúdo do arquivo `MenuComponet.js` com o código atual que foi passado.
+- Criei uma pasta chamada `shared` na pasta `src` e na pasta `shared` adicionei o conteúdo atual que foi pedido.
+- Atualizei o arquivo `App.js` para as especificações pedidas.
+- Atualizei o README.md e enviei todo o relatorio para o GitHub.
 
-Ele é usado pra exibir uma lista de pratos mostrando as informações sobre cada um, como: nome, imagem e a descrição.  Ele é feito com `react` e usa o framework `reactstrap` para estilização.
+## Arquivo `MenuComponet.js`
 
-## 1. Importações 
+Ele exibe a lista de pratos no app e mostra detalhes do prato selecionado quando o usuário clica nele. Ele recebe os pratos como dados e organiza o menu.
 
-```js
-import React, { useState } from 'react';
-import { Media } from 'reactstrap';
-```
+1. **Quais os imports utilizados?**
+- `react`: É uma biblioteca que ajuda a criar páginas da web mais interativas, com ela dá para organizar o código em pedaços menores chamados "componentes".
+- ``Card``: É tipo um "caixinha" usada para organizar informações, como uma foto, título e texto, tudo junto e organizado.
+- ``CardImg``: Ele serve para mostrar uma imagem dentro do card. Por exemplo, a foto de um prato.
+- ``CardImgOverlay``: É como uma camada em cima da imagem, onde da para colocar texto ou outras coisas sobre a foto, como por exemplo uma descrição.
+- ``CardText``: É para adicionar textos dentro do card, como uma descrição ou algum detalhe.
+- ``CardBody``: É o espaço dentro do cartão onde se organiza as coisas, como o texto e o título.
+- ``CardTitle``:
+É usado para mostrar o título do cartão, tipo o nome de um prato.
 
-- `React` e `useState`: Ele é usado para guardar os pratos como um estado dentro do componente.
-- `Media`: É um componente pronto doo `reactstrap` que exibe imagens e textos. 
-  
-## 2. Lista de pratos
+1.  **Há componentes? O que fazem?**
+   
+- Componente ``Menu``: É um pedaço de código que organiza e exibe uma lista de pratos. Ele mostra cards com o nome e a imagem de cada prato e permite que quando clicar em um prato mais detalhes sejam apresentados.
 
-```js
-const [dishes] = useState([
-    {
-      id: 0,
-      name: 'Uthappizza',
-      image: 'assets/images/uthappizza.png',
-      category: 'mains',
-      label: 'Hot',
-      price: '4.99',
-      description: 
-        'A unique combination of Indian Uthappam (pancake) and Italian pizza, ' + 
-        'topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, ' + 
-        'Guntur chillies and Buffalo Paneer.'
-    },
-    {
-      id: 1,
-      name: 'Zucchipakoda',
-      image: 'assets/images/zucchipakoda.png',
-      category: 'appetizer',
-      label: '',
-      price: '1.99',
-      description: 
-        'Deep fried Zucchini coated with mildly spiced Chickpea flour batter ' + 
-        'accompanied with a sweet-tangy tamarind sauce.'
-    },
-    {
-      id: 2,
-      name: 'Vadonut',
-      image: 'assets/images/vadonut.png',
-      category: 'appetizer',
-      label: 'New',
-      price: '1.99',
-      description: 
-        'A quintessential Confusion experience, is it a vada or is it a donut?'
-    },
-    {
-      id: 3,
-      name: 'Elaicheese Cake',
-      image: 'assets/images/elaicheesecake.png',
-      category: 'dessert',
-      label: '',
-      price: '2.99',
-      description: 
-        'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust ' + 
-        'and spiced with Indian cardamoms.'
-    }
-  ]);
-```
+- Componentes do Reactstrap:
 
-- `dishes`: É uma lista de objetos, onde cada objeto é um prato com propiedades especificas:
+``Card``: Serve para criar um cartão que exibe informações de cada prato.
+``CardImg``: Mostra a imagem do prato.
+``CardImgOverlay``: Adiciona uma camada de texto ou título sobre a imagem do cartão.
+``CardText``: Exibe um texto de descrição do prato.
+``CardBody``: Organiza o conteúdo dentro do cartão, como texto e título.
+``CardTitle``: Mostra o nome do prato.
 
-1. `id`: código do prato.
-2. `name`: nome do prato.
-3. `image`: imagem referente ao prato.
-4. `category`: categoria em que o prato está.
-5. `label`: rótulo do prato.
-6. `price`: preço do prato.
-7. `descricion`: descrição geral do prato.
+3. **Para que serve o ``OnDishSelect`` no projeto?**
 
-## 3. Gerando os itens do menu
+- Ele serve para guardar o prato que o usuário clicou. Quando um prato é selecionado ele salva esse prato no estado `selectedDish` para que as informações dele possam ser mostradas depois.
 
-```js
-  const menu = dishes.map((dish) => {
-    return (
-      <div key={dish.id} className="col-12 mt-5">
-        <Media tag="li">
-          <Media left middle>
-            <Media object src={dish.image} alt={dish.name} />
-          </Media>
-          <Media body className="ml-5">
-            <Media heading>{dish.name}</Media>
-            <p>{dish.description}</p>
-          </Media>
-        </Media>
-      </div>
-    );
-  });
-```
+4. **Para que serve o ``renderDish``?**
 
-- `map()`: Ele vai pecorrer a lista de pratos (`dishes`)e criar um HTML para cada prato.
-  
-#### Estrutural de cada prato
+- Ele serve para exibir os detalhes de um prato quando ele é selecionado. Quando um prato for escolhido ele mostra a imagem, o nome e a descrição do prato. Se nenhum prato for selecionado, ele não exibe nada. É como uma função que mostra as informações de um prato quando você clica nele.
 
-- Imagem: fica a esquerda. 
-- Descrição: fica ao lado do prato.
+5. **Para que serve o ``props.dishes.map``?**
 
-## 4. Exibição do Menu
+- Ele é usado para pegar todos os pratos que sao passados para um componente e faz algo para cada prato, ele cria um card para cadaprato, onde exibe a imagem e o nome. Vai repetindo para cada prato exibindo na tela.
 
-```js
-return {(
-    <div className="container">
-      <div className="row">
-        <Media list>
-          {menu}
-        </Media>
-      </div>
-    </div>
-  );
-};
-```
+## Arquivo `dishes.js`
 
-- `container`: organiza todos os pratos e e centraliza eles na pagina.
-- Itens do menu: cada prato é exibido na tela ao pecorrer a lista de pratos(`dishes`).
+Ele contém os dados dos pratos, como nome, descrição, preço, imagem e comentários e é usado para fornecer as informações que o MenuComponent.js precisa para exibir os pratos.
 
-## 5 Exportação
+1. **Quais as propriedades?**
 
-```js
-export default Menu;
-```
+São os detalhes de cada prato:
 
-- Ele permite que o componente `Menu` seja usado em outros lugares.
+- ``id``: um número único para identificar o prato.
+- ``name``: o nome do prato.
+- ``image``: o caminho da imagem do prato.
+- ``category``: a categoria do prato.
+- ``label``: uma etiqueta para o prato.
+- ``price``: o preço do prato.
+- ``description``: uma descrição do prato.
+- ``comments``: uma lista com comentários feitos sobre o prato.
+
+1. **Que tipo de date é utilizado?**
+
+O tipo de dado utilizado no arquivo
+
+- Número: usado para valores como o id de cada prato e a rating de cada comentário.
+- Texto: usado para armazenar o name, image, category, label, description e os textos dos comentários.
+- Lista: para armazenar os comentários.
+
+## Arquivo `App.js`
+
+Ele é a entradado app, ele configura a estrutura basica da página, e passa os dados dos pratos para o `MenuComponent.js` para os pratos serem exibidos.
+
+1. **Para que serve oconst [dishes]?**
+
+Ele cria uma variável chamada dishes e a inicia com um valor, usando o ``useState`` onde o valor dessa variável é a lista de pratos que vem do arquivo  chamado dishes.js. Onde isso ajuda a armazenar e organizar as informações sobre os pratos, como nome, preço e descrição, dentro do componente ``App.js``.
+
+2. **Explique como funciona o <Menu dishes={dishes} />**
+
+le server para passar a lista de pratos para o componente Menu, ou seja que dentro do Menu, ele vai receber a lista de pratos e vai usar ela para exibir as informações sobre cada prato. A ``dishes`` é chamada de props e é usada para passar dados do  ``App.js`` para um o ``Menu``.
