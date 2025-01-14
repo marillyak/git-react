@@ -1,84 +1,149 @@
-# Exercício (Instruções): Componentes do React - Parte 2
 
-## Alterações feitas
+# Explicação dos Componentes Criados
 
--  Atualizei o  conteúdo do arquivo `MenuComponet.js` com o código atual que foi passado.
-- Criei uma pasta chamada `shared` na pasta `src` e na pasta `shared` adicionei o conteúdo atual que foi pedido.
-- Atualizei o arquivo `App.js` para as especificações pedidas.
-- Atualizei o README.md e enviei todo o relatorio para o GitHub.
+Estes componentes mostram como utilizar `useRef` para manipular elementos do DOM ou armazenar referências a intervalos, e como usar Context API para gerenciar estados globais na aplicação de maneira eficiente.
 
-## Arquivo `MenuComponet.js`
+## Exercício 1: Foco em um Input
 
-Ele exibe a lista de pratos no app e mostra detalhes do prato selecionado quando o usuário clica nele. Ele recebe os pratos como dados e organiza o menu.
+### Descrição
+O componente cria um campo de entrada de texto e um botão. Quando o botão é clicado, o campo recebe foco automaticamente.
 
-1. **Quais os imports utilizados?**
-- `react`: É uma biblioteca que ajuda a criar páginas da web mais interativas, com ela dá para organizar o código em pedaços menores chamados "componentes".
-- ``Card``: É tipo um "caixinha" usada para organizar informações, como uma foto, título e texto, tudo junto e organizado.
-- ``CardImg``: Ele serve para mostrar uma imagem dentro do card. Por exemplo, a foto de um prato.
-- ``CardImgOverlay``: É como uma camada em cima da imagem, onde da para colocar texto ou outras coisas sobre a foto, como por exemplo uma descrição.
-- ``CardText``: É para adicionar textos dentro do card, como uma descrição ou algum detalhe.
-- ``CardBody``: É o espaço dentro do cartão onde se organiza as coisas, como o texto e o título.
-- ``CardTitle``:
-É usado para mostrar o título do cartão, tipo o nome de um prato.
+### Código
+```js
+import React, { useRef } from 'react';
 
-1.  **Há componentes? O que fazem?**
-   
-- Componente ``Menu``: É um pedaço de código que organiza e exibe uma lista de pratos. Ele mostra cards com o nome e a imagem de cada prato e permite que quando clicar em um prato mais detalhes sejam apresentados.
+const FocusInput = () => {
+  const inputRef = useRef(null);
 
-- Componentes do Reactstrap:
+  const handleFocus = () => {
+    inputRef.current.focus();
+  };
 
-``Card``: Serve para criar um cartão que exibe informações de cada prato.
-``CardImg``: Mostra a imagem do prato.
-``CardImgOverlay``: Adiciona uma camada de texto ou título sobre a imagem do cartão.
-``CardText``: Exibe um texto de descrição do prato.
-``CardBody``: Organiza o conteúdo dentro do cartão, como texto e título.
-``CardTitle``: Mostra o nome do prato.
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={handleFocus}>Focar Input</button>
+    </div>
+  );
+};
 
-3. **Para que serve o ``OnDishSelect`` no projeto?**
+export default FocusInput;
+```
 
-- Ele serve para guardar o prato que o usuário clicou. Quando um prato é selecionado ele salva esse prato no estado `selectedDish` para que as informações dele possam ser mostradas depois.
+### Explicação
+- **`useRef(null)`**: Cria uma referência ao campo de entrada.
+- **`ref={inputRef}`**: Conecta o campo de entrada à referência criada.
+- **`inputRef.current.focus()`**: Quando o botão é clicado, o campo recebe foco automaticamente.
 
-4. **Para que serve o ``renderDish``?**
 
-- Ele serve para exibir os detalhes de um prato quando ele é selecionado. Quando um prato for escolhido ele mostra a imagem, o nome e a descrição do prato. Se nenhum prato for selecionado, ele não exibe nada. É como uma função que mostra as informações de um prato quando você clica nele.
+## Exercício 2: Controlando um Cronômetro
 
-5. **Para que serve o ``props.dishes.map``?**
+### Descrição
+Este componente implementa um cronômetro simples que pode ser iniciado, pausado e resetado.
 
-- Ele é usado para pegar todos os pratos que sao passados para um componente e faz algo para cada prato, ele cria um card para cadaprato, onde exibe a imagem e o nome. Vai repetindo para cada prato exibindo na tela.
+### Código
+```js
+import React, { useState, useRef } from 'react';
 
-## Arquivo `dishes.js`
+const Timer = () => {
+  const intervalRef = useRef(null);
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
-Ele contém os dados dos pratos, como nome, descrição, preço, imagem e comentários e é usado para fornecer as informações que o MenuComponent.js precisa para exibir os pratos.
+  const startTimer = () => {
+    if (!isRunning) {
+      intervalRef.current = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1);
+      }, 1000);
+      setIsRunning(true);
+    }
+  };
 
-1. **Quais as propriedades?**
+  const pauseTimer = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+  };
 
-São os detalhes de cada prato:
+  const resetTimer = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+    setSeconds(0);
+  };
 
-- ``id``: um número único para identificar o prato.
-- ``name``: o nome do prato.
-- ``image``: o caminho da imagem do prato.
-- ``category``: a categoria do prato.
-- ``label``: uma etiqueta para o prato.
-- ``price``: o preço do prato.
-- ``description``: uma descrição do prato.
-- ``comments``: uma lista com comentários feitos sobre o prato.
+  return (
+    <div>
+      <p>Tempo decorrido: {seconds} segundos</p>
+      <button onClick={startTimer}>Iniciar</button>
+      <button onClick={pauseTimer}>Pausar</button>
+      <button onClick={resetTimer}>Resetar</button>
+    </div>
+  );
+};
 
-1. **Que tipo de date é utilizado?**
+export default Timer;
+```
 
-O tipo de dado utilizado no arquivo
+### Explicação
+- **`useState`**: Controla o número de segundos e se o cronômetro está rodando.
+- **`useRef`**: Armazena a referência ao `setInterval` para controlar o cronômetro.
+- **Funções**:
+  - `startTimer`: Inicia o cronômetro, aumentando os segundos a cada 1 segundo.
+  - `pauseTimer`: Pausa o cronômetro, limpando o intervalo ativo.
+  - `resetTimer`: Reseta os segundos para 0 e interrompe o cronômetro.
 
-- Número: usado para valores como o id de cada prato e a rating de cada comentário.
-- Texto: usado para armazenar o name, image, category, label, description e os textos dos comentários.
-- Lista: para armazenar os comentários.
 
-## Arquivo `App.js`
+## Exercício 3: Contexto de Tema
 
-Ele é a entradado app, ele configura a estrutura basica da página, e passa os dados dos pratos para o `MenuComponent.js` para os pratos serem exibidos.
+### Descrição
+Este componente implementa um sistema de tema claro e escuro. Um componente exibe o tema atual e outro permite alterná-lo.
 
-1. **Para que serve oconst [dishes]?**
+### Código
+```js
+import React, { createContext, useContext, useState } from 'react';
 
-Ele cria uma variável chamada dishes e a inicia com um valor, usando o ``useState`` onde o valor dessa variável é a lista de pratos que vem do arquivo  chamado dishes.js. Onde isso ajuda a armazenar e organizar as informações sobre os pratos, como nome, preço e descrição, dentro do componente ``App.js``.
+const ThemeContext = createContext();
 
-2. **Explique como funciona o <Menu dishes={dishes} />**
+const ThemeProvider = ({ children }) => {
+  const [darkTheme, setDarkTheme] = useState(false);
 
-le server para passar a lista de pratos para o componente Menu, ou seja que dentro do Menu, ele vai receber a lista de pratos e vai usar ela para exibir as informações sobre cada prato. A ``dishes`` é chamada de props e é usada para passar dados do  ``App.js`` para um o ``Menu``.
+  const toggleTheme = () => {
+    setDarkTheme((prevTheme) => !prevTheme);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ darkTheme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+const ThemeDisplay = () => {
+  const { darkTheme } = useContext(ThemeContext);
+  return <div>O tema atual é: {darkTheme ? 'Escuro' : 'Claro'}</div>;
+};
+
+const ThemeSwitcher = () => {
+  const { toggleTheme } = useContext(ThemeContext);
+  return <button onClick={toggleTheme}>Alternar Tema</button>;
+};
+
+const ThemeApp = () => {
+  return (
+    <ThemeProvider>
+      <div>
+        <ThemeDisplay />
+        <ThemeSwitcher />
+      </div>
+    </ThemeProvider>
+  );
+};
+
+export default ThemeApp;
+```
+
+### Explicação
+- **`createContext()`**: Cria o contexto para armazenar o tema e a função para alterná-lo.
+- **`ThemeProvider`**: Envolve os componentes e fornece o estado e a função para alternar o tema.
+- **`useContext`**: Permite acessar o estado do tema e a função de alternância nos componentes `ThemeDisplay` e `ThemeSwitcher`.
+
+
